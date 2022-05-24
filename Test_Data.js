@@ -1,14 +1,14 @@
 // USER A, B, C
 // Bank X, Y
 
-export const Type = {
+const Type = {
   Transaction: "transaction",
   Loan: "loan",
   Bill: "bill",
   Payment: "Payment",
 };
 
-export const ladger = {
+const ladger = {
   1: [
     { id: "1.1", type: Type.Transaction, from: "A", to: "B", amount: 10000 },
     { id: "1.2", type: Type.Transaction, from: "C", to: "A", amount: 20000 },
@@ -62,8 +62,6 @@ export const ladger = {
       id: "5.2",
       type: Type.Loan,
       from: "B",
-      amount: 100000,
-      duration: 10,
       time: 5,
     },
   ],
@@ -159,3 +157,5 @@ export const ladger = {
     },
   ],
 };
+
+module.exports = { Type, ladger };
