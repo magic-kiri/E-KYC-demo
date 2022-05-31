@@ -6,6 +6,9 @@ const {
   loanHelper,
   paymentHelper,
 } = require("./Helper");
+
+const { transactionScore, billScore } = require("./Score");
+
 const userList = {
   A: new User("A"),
   B: new User("B"),
@@ -18,38 +21,37 @@ const empty = {
   payment: [],
 };
 
-function processData(data) {
+function processData(time, data) {
   let total = {
-    A: { ...empty },
-    B: { ...empty },
-    C: { ...empty },
+    A: JSON.parse(JSON.stringify(empty)),
+    B: JSON.parse(JSON.stringify(empty)),
+    C: JSON.parse(JSON.stringify(empty)),
   };
 
-  for (const [time, monthlyTransaction] of Object.entries(data)) {
-    monthlyTransaction.forEach((transaction) => {
-      if (transaction.type === Type.Transaction) {
-        transactionHelper(transaction, total);
-      } else if (transaction.type === Type.Bill) {
-        billHelper(transaction, total);
-      } else if (transaction.type === Type.Loan) {
-        loanHelper(transaction, userList);
-      } else if (transaction.type === Type.Payment) {
-        paymentHelper(transaction, total);
-      }
-    });
-  }
+  data.forEach((transaction) => {
+    if (transaction.type === Type.Transaction) {
+      transactionHelper(transaction, total);
+    } else if (transaction.type === Type.Bill) {
+      billHelper(transaction, total);
+    } else if (transaction.type === Type.Loan) {
+      loanHelper(transaction, userList);
+    } else if (transaction.type === Type.Payment) {
+      paymentHelper(transaction, total);
+    }
+  });
 
   for (const [name, data] of Object.entries(total)) {
     console.log(name);
-    console.log(data.transaction);
+    console.dir(transactionScore(total[name].transaction, name, userList));
+    console.dir(billScore(total[name].transaction, name, userList));
   }
 }
 
-for (let i = 1; i <= 2; i += 2) {
-  let data = { [i]: ladger[i], [i + 1]: ladger[i + 1] };
-  processData(data);
+for (let i = 1; i <= 1; i++) {
+  let data = ladger[i];
+  processData(i, data);
 }
 
-console.log(userList.A.getLoan());
-console.log(userList.B.getLoan());
-console.log(userList.C.getLoan());
+// console.log(userList.A.getLoan());
+// console.log(userList.B.getLoan());
+// console.log(userList.C.getLoan());

@@ -7,7 +7,7 @@ function billHelper(transaction, total) {
   total[transaction.from].bill += transaction.amount;
 }
 
-function loanHelper(transaction,userList) {
+function loanHelper(transaction, userList) {
   let user = userList[transaction.from];
   user.setLoan({
     ...user.getLoan(),

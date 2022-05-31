@@ -7,12 +7,17 @@ class User {
     this.billScore = 0;
     this.startingTime = 0;
     this.lastPaid = 0;
-    this.loan = {};
+    this.loans = {};
+  }
+  getName() {
+    return this.name;
   }
 
-  getRating(currentTime) {
+  getReputationScore(currentTime) {
     let age = currentTime - this.startingTime;
-    return age * (this.transactionScore + this.loanScore + this.billScore);
+    let score = age * (this.transactionScore + this.loanScore + this.billScore);
+    score = score === 0 ? 1 : score;
+    return score;
   }
 
   getTransactionScore() {
@@ -39,11 +44,11 @@ class User {
     this.billScore = score;
   }
 
-  getLoan() {
+  getLoans() {
     return this.loan;
   }
-  setLoan(loan) {
-    this.loan = loan;
+  setLoans(loans) {
+    this.loans = loans;
   }
 }
 
