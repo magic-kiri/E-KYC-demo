@@ -7,7 +7,11 @@ const {
   paymentHelper,
 } = require("./Helper");
 
-const { transactionScore, billScore } = require("./Score");
+const {
+  evaluateTransactionScore,
+  evaluateBillScore,
+  evaluatePaymentScore,
+} = require("./Score");
 
 const userList = {
   A: new User("A"),
@@ -41,18 +45,33 @@ function processData(time, data) {
   });
 
   for (const [name, data] of Object.entries(total)) {
-    // console.log(name);
-    // console.dir(transactionScore(total[name].transaction, name, userList));
-    // console.dir(billScore(total[name].bill, name, userList));
-    console.log(userList[name].getLoans());
+    const transactionScore = evaluateTransactionScore(
+      total[name].transaction,
+      name,
+      userList
+    );
+    const billScore = evaluateBillScore(total[name].bill, name, userList);
+    const loanScore = evaluatePaymentScore(
+      total[name].payment,
+      time,
+      userList[name]
+    );
+
+    userList[name].setTransactionScore(transactionScore);
+    userList[name].setLoanScore(loanScore);
+    userList[name].setBillScore(billScore);
   }
 }
 
-for (let i = 2; i <= 2; i++) {
+for (let i = 1; i <= 3; i++) {
   let data = ladger[i];
   processData(i, data);
-}
+  // console.log(`:::::${i}`);
+  // console.log(userList.A.getTransactionScore());
+  // console.log(userList.A.getLoanScore());
+  // console.log(userList.A.getBillScore());
 
-// console.log(userList.A.getLoan());
-// console.log(userList.B.getLoan());
-// console.log(userList.C.getLoan());
+  // console.log(userList.A.getReputationScore(i));
+  // console.log(userList.B.getReputationScore(i));
+  // console.log(userList.C.getReputationScore(i));
+}

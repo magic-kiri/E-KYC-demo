@@ -15,7 +15,7 @@ class User {
 
   getReputationScore(currentTime) {
     let age = currentTime - this.startingTime;
-    let score = age * (this.transactionScore + this.loanScore + this.billScore);
+    let score = 1 * (this.transactionScore + this.loanScore + this.billScore);
     score = score === 0 ? 1 : score;
     return score;
   }
@@ -49,6 +49,35 @@ class User {
   }
   setLoans(loans) {
     this.loans = loans;
+  }
+
+  payBill(payment) {
+    if (payment?.from !== this.name) {
+      console.log("Not actual owner!");
+    } else {
+      const { paymentID, amount } = payment;
+      if (this.loans[paymentID]) {
+        this.loans[paymentID].paid += amount;
+      } else {
+        console.log(`Loan doesn't exist for ${this.name}`);
+      }
+    }
+  }
+
+  getLoanScoreParameter(time) {
+    let paid = 0,
+      due = 0,
+      unpaid = 0;
+    for (const [id, loanInfo] of Object.entries(this.getLoans())) {
+      if (time === loanInfo.startingTime) {
+        unpaid += loanInfo.amount - loanInfo.paid;
+      }
+      paid += loanInfo.paid;
+      due +=
+        loanInfo.perMonthPayment * (time - loanInfo.startingTime) -
+        loanInfo.paid;
+    }
+    return { paid, due, unpaid };
   }
 }
 
