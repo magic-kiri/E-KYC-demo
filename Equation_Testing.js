@@ -41,13 +41,14 @@ function processData(time, data) {
   });
 
   for (const [name, data] of Object.entries(total)) {
-    console.log(name);
-    console.dir(transactionScore(total[name].transaction, name, userList));
-    console.dir(billScore(total[name].transaction, name, userList));
+    // console.log(name);
+    // console.dir(transactionScore(total[name].transaction, name, userList));
+    // console.dir(billScore(total[name].bill, name, userList));
+    console.log(userList[name].getLoans());
   }
 }
 
-for (let i = 1; i <= 1; i++) {
+for (let i = 2; i <= 2; i++) {
   let data = ladger[i];
   processData(i, data);
 }

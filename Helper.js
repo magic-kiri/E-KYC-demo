@@ -9,8 +9,8 @@ function billHelper(transaction, total) {
 
 function loanHelper(transaction, userList) {
   let user = userList[transaction.from];
-  user.setLoan({
-    ...user.getLoan(),
+  user.setLoans({
+    ...user.getLoans(),
     [transaction.id]: {
       startingTime: transaction.time,
       duration: transaction.duration,

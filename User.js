@@ -45,7 +45,7 @@ class User {
   }
 
   getLoans() {
-    return this.loan;
+    return this.loans;
   }
   setLoans(loans) {
     this.loans = loans;
