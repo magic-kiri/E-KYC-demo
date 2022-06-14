@@ -44,11 +44,13 @@ function processData(time, data) {
     }
   });
 
+  const buffer = {};
   for (const [name, data] of Object.entries(total)) {
     const transactionScore = evaluateTransactionScore(
       total[name].transaction,
       name,
-      userList
+      userList,
+      time
     );
     const billScore = evaluateBillScore(total[name].bill, name, userList);
     const loanScore = evaluatePaymentScore(
@@ -56,22 +58,26 @@ function processData(time, data) {
       time,
       userList[name]
     );
-
-    userList[name].setTransactionScore(transactionScore);
-    userList[name].setLoanScore(loanScore);
-    userList[name].setBillScore(billScore);
+    buffer[name] = { transactionScore, loanScore, billScore };
   }
+
+  // console.dir(buffer, { depth: null });
+
+  Object.keys(buffer).forEach((name) => {
+    const user = userList[name];
+    user.setTransactionScore(buffer[name].transactionScore);
+    user.setLoanScore(buffer[name].loanScore);
+    user.setBillScore(buffer[name].billScore);
+  });
 }
 
-for (let i = 1; i <= 3; i++) {
+for (let i = 1; i <= 12; i++) {
   let data = ladger[i];
   processData(i, data);
-  // console.log(`:::::${i}`);
-  // console.log(userList.A.getTransactionScore());
-  // console.log(userList.A.getLoanScore());
-  // console.log(userList.A.getBillScore());
-
-  // console.log(userList.A.getReputationScore(i));
-  // console.log(userList.B.getReputationScore(i));
-  // console.log(userList.C.getReputationScore(i));
+  console.log({
+    time: i,
+    A: userList.A.getReputationScore(i),
+    B: userList.B.getReputationScore(i),
+    C: userList.C.getReputationScore(i),
+  });
 }

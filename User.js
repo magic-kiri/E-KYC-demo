@@ -15,9 +15,10 @@ class User {
 
   getReputationScore(currentTime) {
     let age = currentTime - this.startingTime;
-    let score = 1 * (this.transactionScore + this.loanScore + this.billScore);
-    score = score === 0 ? 1 : score;
-    return score;
+    let score = age * (this.transactionScore + this.loanScore + this.billScore);
+    // console.log({ age, score });
+    score = score <= 0 ? 1 : score;
+    return Math.log10(score);
   }
 
   getTransactionScore() {
@@ -68,6 +69,7 @@ class User {
     let paid = 0,
       due = 0,
       unpaid = 0;
+    // console.dir(this.getLoans(), { depth: null });
     for (const [id, loanInfo] of Object.entries(this.getLoans())) {
       if (time === loanInfo.startingTime) {
         unpaid += loanInfo.amount - loanInfo.paid;

@@ -63,6 +63,8 @@ const ladger = {
       type: Type.Loan,
       from: "B",
       time: 5,
+      amount: 7 * 10000,
+      duration: 7,
     },
   ],
   6: [
