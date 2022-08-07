@@ -34,13 +34,14 @@ function evaluatePaymentScore(payments, time, user) {
   payments.forEach((payment) => user.payBill(payment));
   const { paid, due, unpaid } = user.getLoanScoreParameter(time);
   const C_l = 1;
-  const C_paid = 1.5;
+  const C_paid = 2;
   const prevLoanScore = user.getLoanScore();
 
   // console.log({ user: user.getName(), paid, due, unpaid, prevLoanScore });
   let L = C_paid * paid - due - unpaid;
-  L = L <= 0 ? 1 : L;
-  const newScore = C_l * Math.log10(L) + prevLoanScore;
+  const sign = L < 0 ? 1 : -1;
+  L = Math.abs(L);
+  const newScore = sign * C_l * Math.log10(L) + prevLoanScore;
   return newScore;
 }
 

@@ -157,6 +157,8 @@ const ladger = {
       from: "B",
       amount: 10000,
     },
+    // { id: "12.3", type: Type.Transaction, from: "A", to: "B", amount: 10000000000 },
+    // { id: "12.4", type: Type.Transaction, from: "C", to: "A", amount: 20000000000 },
   ],
 };
 

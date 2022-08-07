@@ -18,7 +18,7 @@ class User {
     let score = age * (this.transactionScore + this.loanScore + this.billScore);
     // console.log({ age, score });
     score = score <= 0 ? 1 : score;
-    return Math.log10(score);
+    return score;
   }
 
   getTransactionScore() {

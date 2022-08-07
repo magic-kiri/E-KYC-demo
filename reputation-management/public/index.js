@@ -70,14 +70,13 @@ function processData(time, data) {
     user.setBillScore(buffer[name].billScore);
   });
 }
-
+const resultData = { A: [], B: [], C: [] };
 for (let i = 1; i <= 12; i++) {
   let data = ladger[i];
   processData(i, data);
-  console.log({
-    time: i,
-    A: userList.A.getReputationScore(i),
-    B: userList.B.getReputationScore(i),
-    C: userList.C.getReputationScore(i),
-  });
+  resultData.A.push(userList.A.getReputationScore(i));
+  resultData.B.push(userList.B.getReputationScore(i));
+  resultData.C.push(userList.C.getReputationScore(i));
 }
+
+export default resultData;
