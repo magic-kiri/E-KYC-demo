@@ -1,12 +1,6 @@
 import { LoanData } from "./Data";
+import { monthDifference } from "./utils";
 
-function monthDifference(startDate: Date, endDate: Date): number {
-  var months;
-  months = (endDate.getFullYear() - startDate.getFullYear()) * 12;
-  months -= startDate.getMonth();
-  months += endDate.getMonth();
-  return months <= 0 ? 0 : months;
-}
 
 type LoanFactor = {
   paid: number;
@@ -19,7 +13,7 @@ export function evaluateLoanScore(loanData: LoanData[]) {
 
   loanData.forEach((loan) => {
     const { accountNumber } = loan;
-    const { paid, unpaid, due } = calculateIndividualLoanFactor(loan);
+    const { paid, unpaid, due } = getIndividualLoanFactor(loan);
 
     if (loanScoreFactor[accountNumber] === undefined) {
       loanScoreFactor[accountNumber] = { paid, unpaid, due };
@@ -47,7 +41,7 @@ export function evaluateLoanScore(loanData: LoanData[]) {
   return loanScore;
 }
 
-function calculateIndividualLoanFactor({
+function getIndividualLoanFactor({
   amountRecieved,
   debts,
   loanAmount,

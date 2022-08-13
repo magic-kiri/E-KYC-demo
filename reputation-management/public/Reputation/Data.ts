@@ -1,3 +1,4 @@
+// Data Types START
 export type Transaction = {
   sender: number | string;
   reciever: number | string;
@@ -22,7 +23,9 @@ export type Score = {
   transactionScore: number;
   loanScore: number;
   reputation: number;
+  createdAt: string | Date; // When the account was created!
 };
+// Data Types END
 
 export const getAllMoneyTransaction: () => Transaction[] = () => {
   return [
@@ -61,22 +64,25 @@ export const getAllMoneyTransaction: () => Transaction[] = () => {
   ];
 };
 
-export const getPreviousScore = () => {
+export const getPreviousScore: () => Record<string, Score> = () => {
   return {
     "1000020": {
       transactionScore: 0,
       loanScore: 0,
       reputation: 2,
+      createdAt: "2022-07-02T21:46:48.000Z",
     },
     "1000026": {
       transactionScore: 0,
       loanScore: 0,
       reputation: 3,
+      createdAt: "2022-07-02T21:46:48.000Z",
     },
     "200004": {
       transactionScore: 0,
       loanScore: 0,
       reputation: 4,
+      createdAt: "2022-07-02T21:46:48.000Z",
     },
   };
 };
@@ -124,4 +130,8 @@ export const getLoanData: () => LoanData[] = () => {
       loanStartTimeStamp: "2022-08-03T20:56:55.000Z",
     },
   ];
+};
+
+export const getUserList: () => any[] = () => {
+  return [];
 };

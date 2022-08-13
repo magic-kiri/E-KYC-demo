@@ -1,11 +1,22 @@
 import { Score, Transaction } from "./Data";
 
-function getBlankObject(userList) {
-  const object = {};
+function getBlankObject(userList: Set<string | number>) {
+  const object: Record<
+    string,
+    {
+      weightedTotalAmount: number;
+      interactedWith: Set<string | number>;
+      transactionContribution: number;
+    }
+  > = {};
 
   userList.forEach(
     (user) =>
-      (object[user] = { weightedTotalAmount: 0, interactedWith: new Set() })
+      (object[user] = {
+        weightedTotalAmount: 0,
+        interactedWith: new Set(),
+        transactionContribution: 0,
+      })
   );
 
   return object;
@@ -15,7 +26,7 @@ export function evaluateTransactionScore(
   transactions: Transaction[],
   previousScore: Record<string, Score> = {}
 ) {
-  let usersList = new Set();
+  let usersList: Set<string | number> = new Set();
 
   transactions.forEach((transaction) => {
     usersList.add(transaction.sender);
@@ -41,6 +52,5 @@ export function evaluateTransactionScore(
       C_u * Math.log10(weightedTotalAmount * interactedWith.size);
   });
 
-  // add log10
   return initialScore;
 }
