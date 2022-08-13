@@ -131,7 +131,3 @@ export const getLoanData: () => LoanData[] = () => {
     },
   ];
 };
-
-export const getUserList: () => any[] = () => {
-  return [];
-};
