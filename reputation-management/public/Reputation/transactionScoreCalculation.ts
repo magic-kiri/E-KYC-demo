@@ -1,4 +1,5 @@
 import { Score, Transaction } from "./Data";
+import { evaluateReputation } from "./utils";
 
 function getBlankObject(userList: Set<string | number>) {
   const object: Record<
@@ -37,11 +38,13 @@ export function evaluateTransactionScore(
 
   transactions.forEach(({ sender, reciever, amount }) => {
     initialScore[sender].weightedTotalAmount +=
-      amount * (previousScore[reciever]?.reputation || 1);
+      amount *
+      (previousScore[reciever]?.reputation || evaluateReputation(0, 0));
     initialScore[sender].interactedWith.add(reciever);
 
     initialScore[reciever].weightedTotalAmount +=
-      amount * (previousScore[reciever]?.reputation || 1);
+      amount *
+      (previousScore[reciever]?.reputation || evaluateReputation(0, 0));
     initialScore[reciever].interactedWith.add(sender);
   });
   const C_u = 1;

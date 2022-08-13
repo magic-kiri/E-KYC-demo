@@ -6,20 +6,9 @@ import {
 } from "./Data";
 import { evaluateLoanScore } from "./loanScoreCalculation";
 import { evaluateTransactionScore } from "./transactionScoreCalculation";
-import { monthDifference } from "./utils";
+import { evaluateReputation, monthDifference } from "./utils";
 
-// const { evaluateTransactionScore } = require("./transactionScoreCalculation");
-// const { getAllMoneyTransaction, getPreviousScore } = require("./Data");
 
-function evaluateReputation(
-  transactionScore: number,
-  loanScore: number,
-  age: number = 1
-): number {
-  let score = age * (transactionScore + loanScore);
-  score = score <= 0 ? 1 : score;
-  return score;
-}
 
 export const getReputationaScores = () => {
   // Fetch Data START
@@ -47,11 +36,11 @@ export const getReputationaScores = () => {
     const loan = previousScore[user].loanScore + loanScore[user];
     // Evaluating Transaction Score
     const transaction =
-    previousScore[user].transactionScore +
-    transactionScore[user].transactionContribution;
+      previousScore[user].transactionScore +
+      transactionScore[user].transactionContribution;
     // Final Reputation
     const reputation = evaluateReputation(transaction, loan, age);
-    
+
     newReputation[user] = {
       createdAt,
       transactionScore: transaction,

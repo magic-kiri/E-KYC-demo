@@ -33,7 +33,7 @@ export function evaluateLoanScore(loanData: LoanData[]) {
   userList.forEach((user) => {
     const { paid, unpaid, due } = loanScoreFactor[user];
     let L = C_paid * paid - due - unpaid;
-    const sign = L < 0 ? -1 : 1;
+    const sign = L < 0 ? -1 : 1; // sign of L .... positive or negative
     L = Math.abs(L);
     loanScore[user] = sign * C_l * Math.log10(L);
   });
