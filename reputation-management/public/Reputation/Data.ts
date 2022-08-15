@@ -27,7 +27,9 @@ export type Score = {
 };
 // Data Types END
 
-export const getAllMoneyTransaction: () => Transaction[] = () => {
+export const getAllMoneyTransaction: () => Promise<
+  Transaction[]
+> = async () => {
   return [
     {
       sender: 1000020,
@@ -64,7 +66,9 @@ export const getAllMoneyTransaction: () => Transaction[] = () => {
   ];
 };
 
-export const getPreviousScore: () => Record<string, Score> = () => {
+export const getPreviousScore: () => Promise<
+  Record<string, Score>
+> = async () => {
   return {
     "1000020": {
       transactionScore: 0,
@@ -87,7 +91,7 @@ export const getPreviousScore: () => Record<string, Score> = () => {
   };
 };
 
-export const getLoanData: () => LoanData[] = () => {
+export const getLoanData: () => Promise<LoanData[]> = async () => {
   return [
     {
       loanId: 19,

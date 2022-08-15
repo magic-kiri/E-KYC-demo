@@ -8,11 +8,11 @@ import { evaluateLoanScore } from "./loanScoreCalculation";
 import { evaluateTransactionScore } from "./transactionScoreCalculation";
 import { evaluateReputation, monthDifference } from "./utils";
 
-export const getReputationaScores = () => {
+export const getReputationaScores = async () => {
   // Fetch Data START
-  const transactionData = getAllMoneyTransaction();
-  const loanData = getLoanData();
-  const previousScore = getPreviousScore();
+  const transactionData = await getAllMoneyTransaction();
+  const loanData = await getLoanData();
+  const previousScore = await getPreviousScore();
   // Fetch Data END
 
   // Caculating Scores START
@@ -21,7 +21,6 @@ export const getReputationaScores = () => {
     previousScore
   );
   const loanScore = evaluateLoanScore(loanData);
-  console.log(loanScore);
   // Calculating Scores END
 
   const newReputation: Record<string, Score> = {};
